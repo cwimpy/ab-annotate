@@ -1,0 +1,46 @@
+%% ab-annotate-example.tex
+%% Minimal working example for the ab-annotate package.
+%%
+%% Compile with:
+%%   pdflatex ab-annotate-example
+%%   biber ab-annotate-example
+%%   pdflatex ab-annotate-example
+%%
+\documentclass[11pt, letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[USenglish]{babel}
+\usepackage{csquotes}
+
+% Load biblatex with your preferred style
+\usepackage[style=authoryear, backend=biber, sorting=nyt]{biblatex}
+\addbibresource{ab-annotate-example.bib}
+
+% Load ab-annotate (after biblatex)
+\usepackage{ab-annotate}
+
+% Optional: customize appearance
+% \renewcommand{\abAnnotateAbstractFont}{\small}          % roman instead of italic
+% \renewcommand{\abAnnotateAnnotationFont}{\small\slshape} % slanted annotations
+% \setlength{\abAnnotateAbstractIndent}{2em}               % deeper indent
+% \usepackage[annotation=false]{ab-annotate}               % suppress annotations
+
+\title{Annotated Bibliography: Rural Election Administration}
+\author{Cameron Wimpy}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent This annotated bibliography surveys key works on election
+administration in rural contexts. Entries include abstracts where
+available and personal annotations noting relevance to ongoing research.
+
+\medskip
+
+% Force all entries to print (no in-text citations required)
+\nocite{*}
+
+\printbibliography[title={Annotated Bibliography}]
+
+\end{document}

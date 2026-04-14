@@ -1,0 +1,35 @@
+---
+title: "Annotated Bibliography: Rural Election Administration"
+author: "Cameron Wimpy"
+date: today
+bibliography: ab-annotate-example.bib
+nocite: '@*'
+citeproc: false
+filters:
+  - ab-annotate.lua
+ab-annotate:
+  show-abstract: true
+  show-annotation: true
+  show-labels: true
+  abstract-label: "Abstract"
+  annotation-label: "Annotation"
+format:
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 11pt
+    csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+  html:
+    theme: default
+    css: ab-annotate.css
+    csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+  typst:
+    csl: apa
+---
+
+This annotated bibliography surveys key works on election administration
+in rural contexts. Entries include abstracts where available and personal
+annotations noting relevance to ongoing research.
+
+::: {#refs}
+:::

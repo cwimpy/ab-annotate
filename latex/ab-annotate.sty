@@ -1,0 +1,121 @@
+%% ab-annotate.sty
+%% A biblatex supplement for annotated bibliographies with abstracts and annotations.
+%% Works on top of any biblatex style by patching bibliography drivers.
+%%
+%% Usage:
+%%   \usepackage[style=authoryear]{biblatex}
+%%   \usepackage{ab-annotate}
+%%
+%% Options:
+%%   abstract=true|false    (default: true)  — show abstract blocks
+%%   annotation=true|false  (default: true)  — show annotation blocks
+%%   labels=true|false      (default: true)  — show "Abstract:"/"Annotation:" headers
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ab-annotate}[2026/04/13 v0.1 Annotated bibliography with abstracts and annotations]
+
+%% Dependencies
+\RequirePackage{xpatch}
+\RequirePackage{changepage}
+
+%% ----- Package options via kvoptions -----
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{family=aban,prefix=aban@}
+\DeclareBoolOption[true]{abstract}
+\DeclareBoolOption[true]{annotation}
+\DeclareBoolOption[true]{labels}
+\ProcessKeyvalOptions*
+
+%% ----- User-customizable commands -----
+
+% Labels
+\newcommand{\abAnnotateAbstractLabel}{Abstract}
+\newcommand{\abAnnotateAnnotationLabel}{Annotation}
+
+% Fonts
+\newcommand{\abAnnotateAbstractFont}{\small\itshape}
+\newcommand{\abAnnotateAnnotationFont}{\small}
+
+% Label font
+\newcommand{\abAnnotateLabelFont}{\small\bfseries}
+
+% Indentation (left margin for the block)
+\newlength{\abAnnotateAbstractIndent}
+\setlength{\abAnnotateAbstractIndent}{1.5em}
+
+\newlength{\abAnnotateAnnotationIndent}
+\setlength{\abAnnotateAnnotationIndent}{1.5em}
+
+% Vertical skip before each block
+\newlength{\abAnnotateBlockSkip}
+\setlength{\abAnnotateBlockSkip}{0.5ex}
+
+% Vertical skip between abstract and annotation when both present
+\newlength{\abAnnotateInterSkip}
+\setlength{\abAnnotateInterSkip}{0.3ex}
+
+%% ----- Bibmacros -----
+
+\newbibmacro{ab-annotate/abstract}{%
+  \ifaban@abstract
+    \iffieldundef{abstract}{}{%
+      \par\vskip\abAnnotateBlockSkip
+      \begin{adjustwidth}{\abAnnotateAbstractIndent}{0pt}%
+        \noindent
+        \ifaban@labels
+          {\abAnnotateLabelFont\abAnnotateAbstractLabel:\space}%
+        \fi
+        {\abAnnotateAbstractFont\printfield{abstract}}%
+      \end{adjustwidth}%
+    }%
+  \fi
+}
+
+\newbibmacro{ab-annotate/annotation}{%
+  \ifaban@annotation
+    \iffieldundef{annotation}{}{%
+      \par\vskip\abAnnotateInterSkip
+      \begin{adjustwidth}{\abAnnotateAnnotationIndent}{0pt}%
+        \noindent
+        \ifaban@labels
+          {\abAnnotateLabelFont\abAnnotateAnnotationLabel:\space}%
+        \fi
+        {\abAnnotateAnnotationFont\printfield{annotation}}%
+      \end{adjustwidth}%
+    }%
+  \fi
+}
+
+%% ----- Patch bibliography drivers -----
+%% We patch each driver to insert our macros before finentry.
+%% If a driver doesn't exist in the loaded style, xpatch silently fails.
+
+\newcommand{\abAnnotatePatchDriver}[1]{%
+  \xpatchbibdriver{#1}%
+    {\usebibmacro{finentry}}%
+    {\usebibmacro{ab-annotate/abstract}%
+     \usebibmacro{ab-annotate/annotation}%
+     \usebibmacro{finentry}}%
+    {}%
+    {}% silent failure
+}
+
+% Patch all standard drivers
+\abAnnotatePatchDriver{article}
+\abAnnotatePatchDriver{book}
+\abAnnotatePatchDriver{booklet}
+\abAnnotatePatchDriver{collection}
+\abAnnotatePatchDriver{inbook}
+\abAnnotatePatchDriver{incollection}
+\abAnnotatePatchDriver{inproceedings}
+\abAnnotatePatchDriver{manual}
+\abAnnotatePatchDriver{misc}
+\abAnnotatePatchDriver{online}
+\abAnnotatePatchDriver{patent}
+\abAnnotatePatchDriver{periodical}
+\abAnnotatePatchDriver{proceedings}
+\abAnnotatePatchDriver{report}
+\abAnnotatePatchDriver{thesis}
+\abAnnotatePatchDriver{unpublished}
+
+\endinput

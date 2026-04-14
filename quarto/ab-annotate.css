@@ -1,0 +1,28 @@
+/* ab-annotate.css — Styles for annotated bibliography blocks in HTML output */
+
+.ab-annotate-block {
+  margin-left: 1.5em;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  padding-left: 0.8em;
+  border-left: 2px solid #999;
+  font-size: 0.9em;
+}
+
+.ab-abstract {
+  border-left-color: #4a7fb5;
+}
+
+.ab-annotation {
+  border-left-color: #6b8e5a;
+}
+
+/* Ensure the annotation blocks sit close to their parent entry */
+#refs > .ab-annotate-block {
+  margin-bottom: 0.8em;
+}
+
+/* Space before the next bibliography entry after an annotation */
+#refs > div[id^="ref-"] {
+  margin-top: 1em;
+}

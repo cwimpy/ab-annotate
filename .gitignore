@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Archive of the original source drop
+ab-annotate.zip
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.run.xml
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Typst build cache
+.typst-cache/
+
+# Quarto
+/.quarto/
+_site/
+_freeze/
+
+# Editor
+*.swp
+*.swo
+.vscode/
+.idea/
