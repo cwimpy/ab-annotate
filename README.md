@@ -30,18 +30,35 @@ Publishing steps are in `typst/PUBLISHING.md` (see Roadmap below).
 quarto add cwimpy/ab-annotate
 ```
 
-Then in your `.qmd`:
+That drops a filter into `_extensions/cwimpy/ab-annotate/`. It does **not** create a starter `.qmd` — you provide that. A minimal working document:
 
-```yaml
+````markdown
 ---
-bibliography: references.bib
+title: "My Document"
+bibliography: refs.bib
+nocite: |
+  @*
 citeproc: false
 filters:
   - ab-annotate
+format:
+  html: default
+  pdf:
+    pdf-engine: xelatex
 ---
-```
 
-Setting `citeproc: false` is required — the filter calls citeproc itself so it can inject annotations after citations are processed.
+# References
+
+::: {#refs}
+:::
+````
+
+Two pieces are required:
+
+- `citeproc: false` — the filter calls citeproc itself so it can inject annotations after citations are resolved.
+- An empty `::: {#refs} :::` div (or inline `@key` citations / `nocite: "@*"`) so there's a `#refs` div for the filter to walk.
+
+A fully working example is in [`examples/quarto/`](examples/quarto/) — clone the repo or copy `demo.qmd` + `refs.bib`.
 
 ### LaTeX (manual install, CTAN submission pending)
 

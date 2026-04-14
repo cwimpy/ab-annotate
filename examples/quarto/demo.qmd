@@ -1,0 +1,27 @@
+---
+title: "ab-annotate demo"
+bibliography: refs.bib
+nocite: |
+  @*
+citeproc: false
+filters:
+  - ab-annotate
+format:
+  html:
+    theme: cosmo
+  pdf:
+    pdf-engine: xelatex
+ab-annotate:
+  show-abstract: true
+  show-annotation: true
+  show-labels: true
+---
+
+This document demonstrates `ab-annotate` as a Quarto extension.
+Every entry in `refs.bib` will be listed below (via `nocite: "@*"`),
+with its abstract and annotation attached to each reference.
+
+# References
+
+::: {#refs}
+:::
