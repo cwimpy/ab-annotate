@@ -87,7 +87,7 @@
 // ── Render annotated bibliography ───────────────────────────────
 
 #let annotated-bib(
-  bib-file,
+  bib-source,
   title: "Annotated Bibliography",
   style: "apa",
   show-abstract: true,
@@ -99,24 +99,25 @@
   block-spacing: 0.5em,
   entry-spacing: 1.2em,
 ) = {
-  // Parse the .bib file
-  let bib-content = read(bib-file)
+  // `bib-source` must be bytes from `read(path, encoding: none)` called
+  // at the user's document site — Typst resolves `read()` paths relative
+  // to the file that syntactically contains the call, so the user must
+  // do the reading themselves.
+  let bib-content = if type(bib-source) == bytes {
+    str(bib-source)
+  } else {
+    bib-source
+  }
   let entries = parse-bib(bib-content)
-  
-  // Title
+
   if title != none {
     heading(level: 1, numbering: none, title)
   }
-  
-  // Render the standard bibliography (hidden) so cite keys resolve
-  // Then show our custom annotated version
-  //
-  // NOTE: We render a standard bibliography and follow it with
-  // annotation blocks keyed to each entry. This is the most
-  // reliable approach given Typst's current bibliography API.
-  
-  // Show the real bibliography
-  bibliography(bib-file, title: none, style: style, full: true)
+
+  // Render the real bibliography so cite keys resolve and formatting
+  // comes from the chosen CSL style. `bibliography()` accepts bytes
+  // since Typst 0.12.
+  bibliography(bib-source, title: none, style: style, full: true)
   
   // Now append annotation blocks for entries that have them
   for entry in entries {

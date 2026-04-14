@@ -27,6 +27,6 @@ available and personal annotations noting relevance to ongoing research.
 #cite(<stewart2020>, form: "full")
 
 #annotated-bib(
-  "ab-annotate-example.bib",
+  read("ab-annotate-example.bib", encoding: none),
   style: "apa",
 )
