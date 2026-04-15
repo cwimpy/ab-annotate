@@ -1,0 +1,217 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!70!black,
+  citecolor=blue!70!black,
+}
+
+\definecolor{codebg}{rgb}{0.97,0.97,0.97}
+\fvset{
+  frame=single,
+  rulecolor=\color{gray!40},
+  fontsize=\small,
+  formatcom=\color{black},
+}
+
+\title{The \texttt{ab-annotate} package\\[0.4em]
+  \large Annotated bibliographies with abstracts and user annotations}
+\author{Cameron Wimpy\\\href{mailto:cwimpy@astate.edu}{\texttt{cwimpy@astate.edu}}}
+\date{Version 0.1.0 \quad 2026-04-14}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+\texttt{ab-annotate} is a lightweight \texttt{biblatex} supplement that
+renders an \emph{abstract} and a user-supplied \emph{annotation}
+beneath each entry in a bibliography. Both are standard
+\texttt{biblatex} fields (\texttt{abstract} and
+\texttt{annotation}/\texttt{annote})---no custom entry types are
+required. The package works on top of any \texttt{biblatex} style by
+patching the standard bibliography drivers.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+\section{Introduction}
+
+An \emph{annotated bibliography} is a bibliography in which each
+reference is followed by a short description---typically an abstract,
+a critical note, or both. \texttt{ab-annotate} adds this capability
+to \texttt{biblatex} without replacing your chosen citation style.
+It reads two optional fields per entry:
+
+\begin{itemize}[nosep]
+  \item \texttt{abstract} --- the journal-supplied abstract, often
+    already present in Zotero or Mendeley exports.
+  \item \texttt{annotation} --- your own note on the source
+    (\texttt{annote} is accepted as a synonym).
+\end{itemize}
+
+Either field may be omitted; an entry with neither renders as an
+ordinary citation.
+
+\section{Installation}
+
+The package is available on CTAN and is included in TeX~Live and
+MikTeX. If it is not already installed, you can fetch it with your
+distribution's package manager:
+
+\begin{Verbatim}
+# TeX Live
+tlmgr install ab-annotate
+
+# MikTeX picks it up on demand at first use.
+\end{Verbatim}
+
+\section{Basic usage}
+
+Load \texttt{biblatex} in the usual way, then add \texttt{ab-annotate}
+afterwards:
+
+\begin{Verbatim}
+\documentclass{article}
+\usepackage[style=authoryear]{biblatex}
+\usepackage{ab-annotate}
+\addbibresource{refs.bib}
+
+\begin{document}
+\nocite{*}
+\printbibliography
+\end{document}
+\end{Verbatim}
+
+A sample \texttt{.bib} entry:
+
+\begin{Verbatim}
+@article{smith2024,
+  author     = {Smith, Jane},
+  title      = {Rural Election Administration Challenges},
+  journal    = {Journal of Elections},
+  year       = {2024},
+  volume     = {34},
+  pages      = {112--138},
+  abstract   = {Examines logistics and staffing in rural precincts.},
+  annotation = {Key paper for the adaptive informality framework.}
+}
+\end{Verbatim}
+
+\section{Package options}
+
+Options are passed as key--value pairs when loading the package:
+
+\begin{Verbatim}
+\usepackage[abstract=true, annotation=true, labels=true]{ab-annotate}
+\end{Verbatim}
+
+\begin{center}
+\begin{tabular}{@{}llp{0.5\textwidth}@{}}
+\toprule
+\textbf{Option} & \textbf{Default} & \textbf{Effect} \\
+\midrule
+\texttt{abstract}   & \texttt{true} & Show abstract blocks. \\
+\texttt{annotation} & \texttt{true} & Show annotation blocks. \\
+\texttt{labels}     & \texttt{true} & Show ``Abstract:'' / ``Annotation:'' headers. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Customization}
+
+All visual aspects are controlled by redefinable commands and lengths.
+Override them after loading \texttt{ab-annotate}:
+
+\subsection*{Labels}
+\begin{Verbatim}
+\renewcommand{\abAnnotateAbstractLabel}{Summary}
+\renewcommand{\abAnnotateAnnotationLabel}{Notes}
+\end{Verbatim}
+
+\subsection*{Fonts}
+\begin{Verbatim}
+\renewcommand{\abAnnotateAbstractFont}{\small\itshape}
+\renewcommand{\abAnnotateAnnotationFont}{\small}
+\renewcommand{\abAnnotateLabelFont}{\small\bfseries}
+\end{Verbatim}
+
+\subsection*{Indentation and spacing}
+\begin{Verbatim}
+\setlength{\abAnnotateAbstractIndent}{1.5em}
+\setlength{\abAnnotateAnnotationIndent}{1.5em}
+\setlength{\abAnnotateBlockSkip}{0.5ex}
+\setlength{\abAnnotateInterSkip}{0.3ex}
+\end{Verbatim}
+
+\section{How it works}
+
+\texttt{biblatex} renders each entry type (\texttt{article},
+\texttt{book}, etc.) via a corresponding \emph{bibliography driver}.
+\texttt{ab-annotate} uses the \texttt{xpatch} package to inject two
+\texttt{biblatex} macros---\texttt{ab-annotate/abstract} and
+\texttt{ab-annotate/annotation}---into each driver immediately before
+the closing \texttt{finentry} macro. The macros consult the
+\texttt{abstract} and \texttt{annotation} fields on the current entry
+and emit an indented block if the field is populated.
+
+Because the injection happens at driver level, the surrounding
+citation formatting is whatever your chosen \texttt{biblatex} style
+produces. \texttt{ab-annotate} has been tested with
+\texttt{authoryear}, \texttt{apa}, \texttt{chicago-authordate}, and
+\texttt{numeric} styles; custom styles work as long as they use the
+standard driver names.
+
+\section{Compatibility}
+
+\begin{itemize}[nosep]
+  \item Requires \texttt{biblatex} with the \texttt{biber} backend
+    (not \texttt{bibtex}). \texttt{natbib} is not supported.
+  \item Depends on \texttt{xpatch}, \texttt{changepage}, and
+    \texttt{kvoptions}---all standard in TeX~Live and MikTeX.
+  \item Patches the 16 standard \texttt{biblatex} drivers. If a custom
+    style renames drivers, the patch is silently skipped for that
+    driver and the entry renders without annotations.
+\end{itemize}
+
+\section{Related formats}
+
+\texttt{ab-annotate} is part of a cross-format toolchain sharing the
+same \texttt{.bib} conventions:
+
+\begin{itemize}[nosep]
+  \item A Typst package (\texttt{@preview/ab-annotate}) providing the
+    same annotated-bibliography behavior inside Typst documents.
+  \item A Quarto extension (\texttt{cwimpy/ab-annotate}) that renders
+    annotated bibliographies to PDF, HTML, Word, and Typst from a
+    single \texttt{.qmd}.
+\end{itemize}
+
+The shared repository is
+\url{https://github.com/cwimpy/ab-annotate}.
+
+\section{License}
+
+\texttt{ab-annotate} is distributed under the LaTeX Project Public
+License, version~1.3c. See the accompanying \texttt{LICENSE} file or
+\url{https://www.latex-project.org/lppl.txt}.
+
+\section{Version history}
+
+\begin{description}
+  \item[0.1.0 --- 2026-04-14] Initial public release.
+\end{description}
+
+\end{document}
