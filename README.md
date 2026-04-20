@@ -62,11 +62,13 @@ A fully working example is in [`examples/quarto/`](examples/quarto/) — clone t
 
 ### LaTeX (manual install, CTAN submission pending)
 
-Drop `latex/ab-annotate.sty` into your project directory or a local `texmf` tree, then:
+The LaTeX component is distributed on CTAN as **`biblatex-abs-annote`** (the project as a whole remains `ab-annotate`; CTAN asked for a more explicit, biblatex-scoped name).
+
+Drop `latex/biblatex-abs-annote.sty` into your project directory or a local `texmf` tree, then:
 
 ```latex
 \usepackage[style=authoryear]{biblatex}
-\usepackage{ab-annotate}
+\usepackage{biblatex-abs-annote}
 ```
 
 Build with `pdflatex → biber → pdflatex → pdflatex`.

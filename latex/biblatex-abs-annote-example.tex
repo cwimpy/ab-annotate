@@ -1,10 +1,10 @@
-%% ab-annotate-example.tex
-%% Minimal working example for the ab-annotate package.
+%% biblatex-abs-annote-example.tex
+%% Minimal working example for the biblatex-abs-annote package.
 %%
 %% Compile with:
-%%   pdflatex ab-annotate-example
-%%   biber ab-annotate-example
-%%   pdflatex ab-annotate-example
+%%   pdflatex biblatex-abs-annote-example
+%%   biber biblatex-abs-annote-example
+%%   pdflatex biblatex-abs-annote-example
 %%
 \documentclass[11pt, letterpaper]{article}
 
@@ -14,16 +14,16 @@
 
 % Load biblatex with your preferred style
 \usepackage[style=authoryear, backend=biber, sorting=nyt]{biblatex}
-\addbibresource{ab-annotate-example.bib}
+\addbibresource{biblatex-abs-annote-example.bib}
 
-% Load ab-annotate (after biblatex)
-\usepackage{ab-annotate}
+% Load biblatex-abs-annote (after biblatex)
+\usepackage{biblatex-abs-annote}
 
 % Optional: customize appearance
 % \renewcommand{\abAnnotateAbstractFont}{\small}          % roman instead of italic
 % \renewcommand{\abAnnotateAnnotationFont}{\small\slshape} % slanted annotations
 % \setlength{\abAnnotateAbstractIndent}{2em}               % deeper indent
-% \usepackage[annotation=false]{ab-annotate}               % suppress annotations
+% \usepackage[annotation=false]{biblatex-abs-annote}       % suppress annotations
 
 \title{Annotated Bibliography: Rural Election Administration}
 \author{Cameron Wimpy}

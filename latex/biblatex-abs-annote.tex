@@ -25,20 +25,20 @@
   formatcom=\color{black},
 }
 
-\title{The \texttt{ab-annotate} package\\[0.4em]
+\title{The \texttt{biblatex-abs-annote} package\\[0.4em]
   \large Annotated bibliographies with abstracts and user annotations}
 \author{Cameron Wimpy\\\href{mailto:cwimpy@astate.edu}{\texttt{cwimpy@astate.edu}}}
-\date{Version 0.1.0 \quad 2026-04-14}
+\date{Version 0.1.1 \quad 2026-04-19}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
 \noindent
-\texttt{ab-annotate} is a lightweight \texttt{biblatex} supplement that
-renders an \emph{abstract} and a user-supplied \emph{annotation}
-beneath each entry in a bibliography. Both are standard
-\texttt{biblatex} fields (\texttt{abstract} and
+\texttt{biblatex-abs-annote} is a lightweight \texttt{biblatex}
+supplement that renders an \emph{abstract} and a user-supplied
+\emph{annotation} beneath each entry in a bibliography. Both are
+standard \texttt{biblatex} fields (\texttt{abstract} and
 \texttt{annotation}/\texttt{annote})---no custom entry types are
 required. The package works on top of any \texttt{biblatex} style by
 patching the standard bibliography drivers.
@@ -51,9 +51,9 @@ patching the standard bibliography drivers.
 
 An \emph{annotated bibliography} is a bibliography in which each
 reference is followed by a short description---typically an abstract,
-a critical note, or both. \texttt{ab-annotate} adds this capability
-to \texttt{biblatex} without replacing your chosen citation style.
-It reads two optional fields per entry:
+a critical note, or both. \texttt{biblatex-abs-annote} adds this
+capability to \texttt{biblatex} without replacing your chosen citation
+style. It reads two optional fields per entry:
 
 \begin{itemize}[nosep]
   \item \texttt{abstract} --- the journal-supplied abstract, often
@@ -73,20 +73,20 @@ distribution's package manager:
 
 \begin{Verbatim}
 # TeX Live
-tlmgr install ab-annotate
+tlmgr install biblatex-abs-annote
 
 # MikTeX picks it up on demand at first use.
 \end{Verbatim}
 
 \section{Basic usage}
 
-Load \texttt{biblatex} in the usual way, then add \texttt{ab-annotate}
-afterwards:
+Load \texttt{biblatex} in the usual way, then add
+\texttt{biblatex-abs-annote} afterwards:
 
 \begin{Verbatim}
 \documentclass{article}
 \usepackage[style=authoryear]{biblatex}
-\usepackage{ab-annotate}
+\usepackage{biblatex-abs-annote}
 \addbibresource{refs.bib}
 
 \begin{document}
@@ -115,7 +115,7 @@ A sample \texttt{.bib} entry:
 Options are passed as key--value pairs when loading the package:
 
 \begin{Verbatim}
-\usepackage[abstract=true, annotation=true, labels=true]{ab-annotate}
+\usepackage[abstract=true, annotation=true, labels=true]{biblatex-abs-annote}
 \end{Verbatim}
 
 \begin{center}
@@ -133,7 +133,7 @@ Options are passed as key--value pairs when loading the package:
 \section{Customization}
 
 All visual aspects are controlled by redefinable commands and lengths.
-Override them after loading \texttt{ab-annotate}:
+Override them after loading \texttt{biblatex-abs-annote}:
 
 \subsection*{Labels}
 \begin{Verbatim}
@@ -160,16 +160,16 @@ Override them after loading \texttt{ab-annotate}:
 
 \texttt{biblatex} renders each entry type (\texttt{article},
 \texttt{book}, etc.) via a corresponding \emph{bibliography driver}.
-\texttt{ab-annotate} uses the \texttt{xpatch} package to inject two
-\texttt{biblatex} macros---\texttt{ab-annotate/abstract} and
-\texttt{ab-annotate/annotation}---into each driver immediately before
-the closing \texttt{finentry} macro. The macros consult the
+\texttt{biblatex-abs-annote} uses the \texttt{xpatch} package to
+inject two \texttt{biblatex} macros---\texttt{ab-annotate/abstract}
+and \texttt{ab-annotate/annotation}---into each driver immediately
+before the closing \texttt{finentry} macro. The macros consult the
 \texttt{abstract} and \texttt{annotation} fields on the current entry
 and emit an indented block if the field is populated.
 
 Because the injection happens at driver level, the surrounding
 citation formatting is whatever your chosen \texttt{biblatex} style
-produces. \texttt{ab-annotate} has been tested with
+produces. \texttt{biblatex-abs-annote} has been tested with
 \texttt{authoryear}, \texttt{apa}, \texttt{chicago-authordate}, and
 \texttt{numeric} styles; custom styles work as long as they use the
 standard driver names.
@@ -188,8 +188,9 @@ standard driver names.
 
 \section{Related formats}
 
-\texttt{ab-annotate} is part of a cross-format toolchain sharing the
-same \texttt{.bib} conventions:
+\texttt{biblatex-abs-annote} is the \texttt{biblatex} component of
+\texttt{ab-annotate}, a cross-format toolchain sharing the same
+\texttt{.bib} conventions:
 
 \begin{itemize}[nosep]
   \item A Typst package (\texttt{@preview/ab-annotate}) providing the
@@ -204,14 +205,18 @@ The shared repository is
 
 \section{License}
 
-\texttt{ab-annotate} is distributed under the LaTeX Project Public
-License, version~1.3c. See the accompanying \texttt{LICENSE} file or
-\url{https://www.latex-project.org/lppl.txt}.
+\texttt{biblatex-abs-annote} is distributed under the LaTeX Project
+Public License, version~1.3c. See the accompanying \texttt{LICENSE}
+file or \url{https://www.latex-project.org/lppl.txt}.
 
 \section{Version history}
 
 \begin{description}
-  \item[0.1.0 --- 2026-04-14] Initial public release.
+  \item[0.1.1 --- 2026-04-19] Renamed package from
+    \texttt{ab-annotate} to \texttt{biblatex-abs-annote} per CTAN
+    naming guidance.
+  \item[0.1.0 --- 2026-04-14] Initial release (as
+    \texttt{ab-annotate}; not distributed on CTAN).
 \end{description}
 
 \end{document}

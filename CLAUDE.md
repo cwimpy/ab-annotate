@@ -32,9 +32,10 @@ ab-annotate/
 ├── README.md                           # User-facing documentation
 │
 ├── latex/                              # LaTeX/biblatex implementation
-│   ├── ab-annotate.sty                 # The package
-│   ├── ab-annotate-example.tex         # MWE
-│   └── ab-annotate-example.bib         # Sample entries
+│   ├── biblatex-abs-annote.sty         # The package (CTAN name)
+│   ├── biblatex-abs-annote.tex         # Documentation source
+│   ├── biblatex-abs-annote-example.tex # MWE
+│   └── biblatex-abs-annote-example.bib # Sample entries
 │
 ├── typst/                              # Typst implementation
 │   ├── ab-annotate.typ                 # The module
@@ -68,13 +69,15 @@ The `annote` field is treated as a fallback for `annotation` in all three implem
 
 ---
 
-## LaTeX Implementation (`latex/ab-annotate.sty`)
+## LaTeX Implementation (`latex/biblatex-abs-annote.sty`)
+
+The LaTeX component is distributed on CTAN as **`biblatex-abs-annote`** (per CTAN naming guidance — the umbrella repo remains `ab-annotate`).
 
 ### Loading
 
 ```latex
 \usepackage[style=authoryear]{biblatex}
-\usepackage{ab-annotate}
+\usepackage{biblatex-abs-annote}
 ```
 
 ### How it works
@@ -104,10 +107,10 @@ Uses `xpatch` to patch `\usebibmacro{finentry}` in all 16 standard biblatex driv
 ### Build
 
 ```bash
-pdflatex ab-annotate-example
-biber ab-annotate-example
-pdflatex ab-annotate-example
-pdflatex ab-annotate-example
+pdflatex biblatex-abs-annote-example
+biber biblatex-abs-annote-example
+pdflatex biblatex-abs-annote-example
+pdflatex biblatex-abs-annote-example
 ```
 
 ### Compatibility

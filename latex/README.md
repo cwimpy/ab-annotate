@@ -1,22 +1,24 @@
-# ab-annotate
+# biblatex-abs-annote
 
 A `biblatex` supplement for producing annotated bibliographies that render an **abstract** and a user-supplied **annotation** beneath each citation entry.
 
 Both the `abstract` and `annotation` (or `annote`) fields are standard BibLaTeX, so no custom entry types are required. Any combination is optional per entry; an entry with neither renders as an ordinary citation.
 
+`biblatex-abs-annote` is the `biblatex` component of the cross-format [`ab-annotate`](https://github.com/cwimpy/ab-annotate) toolchain (Typst and Quarto companions live in the same repository).
+
 ## Installation
 
-When the package is accepted into CTAN, TeX Live and MikTeX users get it automatically. Otherwise:
+Once accepted into CTAN, TeX Live and MikTeX users get it automatically. Otherwise:
 
 ```
-tlmgr install ab-annotate
+tlmgr install biblatex-abs-annote
 ```
 
 ## Usage
 
 ```latex
 \usepackage[style=authoryear]{biblatex}
-\usepackage{ab-annotate}
+\usepackage{biblatex-abs-annote}
 \addbibresource{refs.bib}
 
 \begin{document}
@@ -25,17 +27,17 @@ tlmgr install ab-annotate
 \end{document}
 ```
 
-See `ab-annotate.pdf` for the full manual, including options, customization commands, and compatibility notes.
+See `biblatex-abs-annote.pdf` for the full manual, including options, customization commands, and compatibility notes.
 
 ## Bundle contents
 
 | File | Purpose |
 |------|---------|
-| `ab-annotate.sty` | The package |
-| `ab-annotate.tex` | Documentation source |
-| `ab-annotate.pdf` | Documentation (compiled) |
-| `LICENSE`         | LPPL 1.3c text |
-| `README.md`       | This file |
+| `biblatex-abs-annote.sty` | The package |
+| `biblatex-abs-annote.tex` | Documentation source |
+| `biblatex-abs-annote.pdf` | Documentation (compiled) |
+| `LICENSE`                 | LPPL 1.3c text |
+| `README.md`               | This file |
 
 ## Dependencies
 
@@ -43,7 +45,7 @@ See `ab-annotate.pdf` for the full manual, including options, customization comm
 
 ## Cross-format companions
 
-`ab-annotate` is part of a cross-format toolchain sharing the same `.bib` conventions:
+`biblatex-abs-annote` is the LaTeX component of a cross-format toolchain sharing the same `.bib` conventions:
 
 - A **Typst** package (`@preview/ab-annotate`) for Typst documents.
 - A **Quarto** extension (`cwimpy/ab-annotate`) for PDF/HTML/Word/Typst output from a single `.qmd`.
