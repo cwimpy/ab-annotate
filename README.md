@@ -60,11 +60,21 @@ Two pieces are required:
 
 A fully working example is in [`examples/quarto/`](examples/quarto/) — clone the repo or copy `demo.qmd` + `refs.bib`.
 
-### LaTeX (manual install, CTAN submission pending)
+### LaTeX (via CTAN)
 
-The LaTeX component is distributed on CTAN as **`biblatex-abs-annote`** (the project as a whole remains `ab-annotate`; CTAN asked for a more explicit, biblatex-scoped name).
+The LaTeX component is distributed on CTAN as **[`biblatex-abs-annote`](https://ctan.org/pkg/biblatex-abs-annote)** (the project as a whole remains `ab-annotate`; CTAN asked for a more explicit, biblatex-scoped name). It ships with TeX Live and MiKTeX.
 
-Drop `latex/biblatex-abs-annote.sty` into your project directory or a local `texmf` tree, then:
+Install via your TeX distribution:
+
+```bash
+# TeX Live
+tlmgr install biblatex-abs-annote
+
+# MiKTeX
+mpm --install=biblatex-abs-annote
+```
+
+Then load it alongside biblatex:
 
 ```latex
 \usepackage[style=authoryear]{biblatex}
@@ -104,7 +114,7 @@ The `_extensions/` directory at the repo root is what `quarto add cwimpy/ab-anno
 - [x] Quarto extension manifest (`_extensions/ab-annotate/_extension.yml`)
 - [ ] Publish Typst package: PR to [typst/packages](https://github.com/typst/packages) adding `packages/preview/ab-annotate/0.1.0/`
 - [ ] Tag a GitHub release so `quarto add cwimpy/ab-annotate@v0.1.0` is pinnable
-- [ ] CTAN: wrap `.sty` in a `.dtx`/`.ins` pair with PDF docs and submit at [ctan.org/upload](https://ctan.org/upload)
+- [x] CTAN: published as [`biblatex-abs-annote`](https://ctan.org/pkg/biblatex-abs-annote)
 
 ## License
 
